@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { getFlags } from "../service";
+import { Link } from "react-router-dom";
 
 import {
   Card,
@@ -89,6 +90,7 @@ const Flags = () => {
         {countries.length > 0 ? (
           countries.map((country) => (
             <Grid item md={3} xs={12}>
+            <Link to={`/flags/detail/${country.name.common}`}>
               <Card>
                 <CardMedia
                   component="img"
@@ -102,6 +104,7 @@ const Flags = () => {
                   <p>Capitak :{country.capital}</p>
                 </CardContent>
               </Card>
+              </Link>
             </Grid>
           ))
         ) : (
