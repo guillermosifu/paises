@@ -26,13 +26,19 @@ const Flags = () => {
     console.log(response);
   };
 
-  const handleRegion = (e) => {
+  const handleRegion = async (e) => {
     setRegion(e.target.value);
     //vamos a evlauar si el valo es igual a all entonces ejcutara el fetch
     if (e.target.value === "all") {
       fetchCountries();
       return;
     }
+    setCountries([]);
+
+    const response = await getFlags(
+      `https://restcountries.com/v3.1/region/${e.target.value}`
+    );
+    setCountries(response);
   };
 
   //vamos a crear un funcion que filtre y se encrague de buscar los paises
@@ -61,7 +67,11 @@ const Flags = () => {
     <Container>
       <Grid container spacing={3} mt={5}>
         <Grid item md={6}>
-          <TextField label="Search your contrie" fullWidth onChange={handleSearchCountry} />
+          <TextField
+            label="Search your contrie"
+            fullWidth
+            onChange={handleSearchCountry}
+          />
         </Grid>
         <Grid item md={6}>
           <FormControl fullWidth>
