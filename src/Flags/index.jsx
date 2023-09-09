@@ -47,7 +47,7 @@ const Flags = () => {
       //aca debemos iniciar la busqyeda
       //para poder hacer la busqueda debo transformar todo el text a uppercase o lowercase
       const filterCountries = countries.filter((country) =>
-        country.name.common.toUppercase().includes(countryName.toUppercase())
+        country.name.common.toUpperCase().includes(countryName.toUpperCase())
       );
       setCountries(filterCountries);
     }
