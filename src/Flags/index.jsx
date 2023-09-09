@@ -13,7 +13,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  CircularProgress
+  CircularProgress,
 } from "@mui/material";
 
 const Flags = () => {
@@ -35,6 +35,24 @@ const Flags = () => {
     }
   };
 
+  //vamos a crear un funcion que filtre y se encrague de buscar los paises
+  const handleSearchCountry = (e) => {
+    // una buena practuca ees deciqeu que inice contando las 3 primeras letras
+    const countryName = e.target.value;
+
+    if (countryName.length === 0) {
+      fetchCountries();
+    }
+    if (countryName.length >= 3) {
+      //aca debemos iniciar la busqyeda
+      //para poder hacer la busqueda debo transformar todo el text a uppercase o lowercase
+      const filterCountries = countries.filter((country) =>
+        country.name.common.toUppercase().includes(countryName.toUppercase())
+      );
+      setCountries(filterCountries);
+    }
+  };
+
   useEffect(() => {
     fetchCountries();
   }, []);
@@ -43,7 +61,7 @@ const Flags = () => {
     <Container>
       <Grid container spacing={3} mt={5}>
         <Grid item md={6}>
-          <TextField label="Search your contrie" fullWidth />
+          <TextField label="Search your contrie" fullWidth onChange={handleSearchCountry} />
         </Grid>
         <Grid item md={6}>
           <FormControl fullWidth>
@@ -58,31 +76,29 @@ const Flags = () => {
             </Select>
           </FormControl>
         </Grid>
-        {countries.length > 0 ?(
-            countries.map((country)=>(
-                <Grid item md={3} xs={12}>
-                <Card>
-                   <CardMedia
-                   component="img"
-                   height={200}
-                   image={country.flags.svg}/>
-                   <CardContent>
-                       <h4>{country.name.common}</h4>
-                       <p>Population : {country.population}</p>
-                       <p>Region : {country.region}</p>
-                       <p>Capitak :{country.capital}</p>
-                   </CardContent>
-                </Card>
-   
-               </Grid>
-            ))
-           
-
-        ):(
-            <div>
-                <CircularProgress/>
-                <h4>cargando..</h4>
-            </div>
+        {countries.length > 0 ? (
+          countries.map((country) => (
+            <Grid item md={3} xs={12}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height={200}
+                  image={country.flags.svg}
+                />
+                <CardContent>
+                  <h4>{country.name.common}</h4>
+                  <p>Population : {country.population}</p>
+                  <p>Region : {country.region}</p>
+                  <p>Capitak :{country.capital}</p>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))
+        ) : (
+          <div>
+            <CircularProgress />
+            <h4>cargando..</h4>
+          </div>
         )}
       </Grid>
     </Container>
